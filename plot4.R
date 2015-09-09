@@ -1,0 +1,12 @@
+Household <- read.csv(file="household_power_consumption.txt", header=TRUE, sep=";", na="?", colClasses=c(rep("character", 2), rep("numeric",7)))
+newData = Household[Household$Date == '1/2/2007' | Household$Date == '2/2/2007', ]
+par(mfrow=c(2,2))
+plot(strptime(paste(newData$Date,newData$Time), format='%d/%m/%Y %H:%M:%S'), newData$Global_active_power, type='l', main='', xlab='', ylab='Global Active Power', col='black')
+plot(strptime(paste(newData$Date,newData$Time), format='%d/%m/%Y %H:%M:%S'), newData$Voltage, type='l', main='', xlab='datetime', ylab='Voltage', col='black')
+plot(strptime(paste(newData$Date,newData$Time), format='%d/%m/%Y %H:%M:%S'), newData$Sub_metering_1, type='n', main='', xlab='', ylab='Energy sub metering', col='black')
+lines(strptime(paste(newData$Date,newData$Time), format='%d/%m/%Y %H:%M:%S'), newData$Sub_metering_1, col='black')
+lines(strptime(paste(newData$Date,newData$Time), format='%d/%m/%Y %H:%M:%S'), newData$Sub_metering_2, col='red')
+lines(strptime(paste(newData$Date,newData$Time), format='%d/%m/%Y %H:%M:%S'), newData$Sub_metering_3, col='blue')
+legend("topright", c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"), lwd=c(2.5,2.5,2.5), col=c("black", "red", "blue"))
+plot(strptime(paste(newData$Date,newData$Time), format='%d/%m/%Y %H:%M:%S'), newData$Global_reactive_power, type='l', main='', xlab='datetime', ylab='Global_reactive_power', col='black')
+dev.off(dev.copy(png,file='plot4.png'))
